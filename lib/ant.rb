@@ -10,7 +10,7 @@ require "addressable/uri"
 module Ant
 
   class API
-    attr_accessor :api_key, :username, :nonce_v
+    attr_accessor :api_key, :username, :nonce_v, :api_secret
 
     def initialize(username, api_key)
       self.username = username
@@ -34,8 +34,12 @@ module Ant
       end
     end
 
+    def account
+      self.api_call('account.htm', {}, true)
+    end
+
     def hashrate
-      self.api_call('hashrate.htm', {}, true, 'hashrate')
+      self.api_call('hashrate.htm', {}, true)
     end
 
     def nonce
@@ -44,7 +48,7 @@ module Ant
 
     def signature
       str = self.nonce_v + self.username + self.api_key
-      OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), api_key,str)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), self.api_secret ,str)
     end
 
     def post(url, param)
