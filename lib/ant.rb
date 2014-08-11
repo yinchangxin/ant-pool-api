@@ -6,6 +6,7 @@ require "net/https"
 require "uri"
 require "json"
 require "addressable/uri"
+require 'rest-client'
 
 module Ant
 
@@ -18,11 +19,11 @@ module Ant
       self.api_secret = api_secret
     end
 
-    def api_call(method, param = {}, priv = false, action = '', is_json = true)
-      url = "http://119.9.76.150/api/#{ method }/#{ action }"
+    def api_call(method, param = {}, priv = false, is_json = true)
+      url = "https://119.9.76.150/api/#{ method }"
       if priv
         self.nonce
-        param.merge!(userId: self.username, :key => self.api_key, :signature => self.signature.to_s, :nonce => self.nonce_v)
+        param.merge!(:key => self.api_key, :signature => self.signature.to_s.upcase, :nonce => self.nonce_v)
       end
       answer = self.post(url, param)
 
@@ -48,17 +49,19 @@ module Ant
     end
 
     def signature
-      str = self.nonce_v + self.username + self.api_key
+      str = self.username + self.api_key + self.nonce_v
       OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), self.api_secret ,str)
     end
 
     def post(url, param)
-      uri = URI.parse(url)
-      https = Net::HTTP.new(uri.host, uri.port)
-      https.use_ssl = true
-      params = Addressable::URI.new
-      params.query_values = param
-      https.post(uri.path, params.query).body
+      # 由于服务器采用不安全openssl
+      # uri = URI.parse(url)
+      # https = Net::HTTP.new(uri.host, uri.port)
+      # https.use_ssl = false
+      # params = Addressable::URI.new
+      # params.query_values = param
+      # https.post(uri.path, params.query).body
+      RestClient.post(url, param)
     end
   end
 end

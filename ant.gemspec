@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ant/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ant"
+  spec.name          = "ant-pool-api"
   spec.version       = Ant::VERSION
   spec.authors       = ["charls","yin"]
   spec.email         = ["yinchangxin1989@gmail.com"]
   spec.description   = "Gem for acsess to api ant pool"
   spec.summary       = "ant pool api library"
-  spec.homepage      = "#"
+  spec.homepage      = "https://github.com/YinChangXin/ant-pool-api"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -27,5 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rr"
 
   spec.add_dependency "addressable"
+  spec.add_dependency "rest-client"
 
 end
