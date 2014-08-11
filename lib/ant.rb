@@ -12,9 +12,10 @@ module Ant
   class API
     attr_accessor :api_key, :username, :nonce_v, :api_secret
 
-    def initialize(username, api_key)
+    def initialize(username, api_key, api_secret)
       self.username = username
       self.api_key = api_key
+      self.api_secret = api_secret
     end
 
     def api_call(method, param = {}, priv = false, action = '', is_json = true)
