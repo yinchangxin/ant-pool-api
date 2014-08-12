@@ -39,7 +39,7 @@ api_key - your API key
 api_secret - your API secret code
 ```
 
-####c) Full API documentation: https://119.9.76.150/apiGuild.htm
+#### Full API documentation: https://www.antpool.com/apiGuild.htm
 
 ###4. Examples
 
