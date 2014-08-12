@@ -20,7 +20,7 @@ module Ant
     end
 
     def api_call(method, param = {}, priv = false, is_json = true)
-      url = "https://119.9.76.150/api/#{ method }"
+      url = "https://www.antpool.com/api/#{ method }"
       if priv
         self.nonce
         param.merge!(:key => self.api_key, :signature => self.signature.to_s.upcase, :nonce => self.nonce_v)
